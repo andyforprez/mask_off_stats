@@ -20,7 +20,7 @@ def get_ranking_by_date(df, target_date, output_file='data/rankings.txt'):
     sorted_players = sorted(last_points.items(), key=lambda x: x[1], reverse=True)
     with open(output_file, 'w', encoding='utf-8') as f:
         f.write(f'RANKING AS OF {target_date.date()}\n')
-        f.write('=' * 50 + '\n')
+        f.write('=' * 50 + '\n\n')
         for rank, (player, points) in enumerate(sorted_players, 1):
             f.write(
                 f'{rank}. {player} - {points} points ({games_count[player]} games)\n'

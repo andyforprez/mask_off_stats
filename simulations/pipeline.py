@@ -101,13 +101,14 @@ def save_playoff_odds_excel(df, path='data/playoff_odds.xlsx'):
     ws.freeze_panes = 'B2'
     wb.save(path)
 
-def run_playoff_odds_pipeline(all_players, output_top=18, eval_pool=50, save_csv=True, save_excel=True):
+def run_playoff_odds_pipeline(all_players, output_top=18, eval_pool=50, save_csv=True, save_excel=True, open_excel=False):
     odds_df = compute_playoff_odds(all_players, output_top, eval_pool)
     if save_csv:
         save_playoff_odds_csv(odds_df)
         print('Playoff Odds saved to data/playoff_odds.csv')
     if save_excel:
         save_playoff_odds_excel(odds_df)
-        startfile(path.abspath(path.join('data', 'playoff_odds.xlsx')))
         print('Playoff Odds saved to data/playoff_odds.xlsx')
+    if open_excel:
+        startfile(path.abspath(path.join('data', 'playoff_odds.xlsx')))
     return odds_df

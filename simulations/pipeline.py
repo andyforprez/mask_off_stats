@@ -3,7 +3,7 @@ from simulations.plots import *
 from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl.formatting.rule import ColorScaleRule
-from os import startfile
+from os import *
 
 def run_full_simulation(df, player, n_sim=1000, inactive_players=None):
     today = df['date'].max()
@@ -108,6 +108,6 @@ def run_playoff_odds_pipeline(all_players, output_top=18, eval_pool=50, save_csv
         print('Playoff Odds saved to data/playoff_odds.csv')
     if save_excel:
         save_playoff_odds_excel(odds_df)
-        startfile('C:/Users/admin/OneDrive/Документы/Andy/Coding/Code/Projects/mask_off_stats/data/playoff_odds.xlsx')
+        startfile(path.abspath(path.join('data', 'playoff_odds.xlsx')))
         print('Playoff Odds saved to data/playoff_odds.xlsx')
     return odds_df

@@ -1,6 +1,7 @@
 from analysis import *
 from dfmaker import *
 from simulations.pipeline import *
+import pandas as pd
 
 df = pd.read_csv('data/raw_data.csv')
 df['date'] = pd.to_datetime(df['date'])

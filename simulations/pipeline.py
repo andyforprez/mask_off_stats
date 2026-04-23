@@ -3,7 +3,7 @@ from simulations.plots import *
 from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl.formatting.rule import ColorScaleRule
-from os import *
+from os import startfile, path
 
 def run_full_simulation(df, player, n_sim=1000, inactive_players=None):
     today = df['date'].max()
@@ -34,8 +34,8 @@ def run_full_simulation(df, player, n_sim=1000, inactive_players=None):
         'all_players': all_players
     }
 
-def save_rank_projection(ranking, path='data/expected_final_ranking.txt'):
-    with open(path, 'w', encoding='utf-8') as f:
+def save_rank_projection(ranking, filepath='data/expected_final_ranking.txt'):
+    with open(filepath, 'w', encoding='utf-8') as f:
         f.write('EXPECTED FINAL RANKING (FROM SIMULATION)\n')
         f.write('=' * 50 + '\n\n')
 
@@ -101,7 +101,7 @@ def save_playoff_odds_excel(df, path='data/playoff_odds.xlsx'):
     ws.freeze_panes = 'B2'
     wb.save(path)
 
-def run_playoff_odds_pipeline(all_players, output_top=18, eval_pool=50, save_csv=True, save_excel=True, open_excel=False):
+def run_playoff_odds_pipeline(all_players, output_top=18, eval_pool=50, save_csv=True, save_excel=True, open_excel=True):
     odds_df = compute_playoff_odds(all_players, output_top, eval_pool)
     if save_csv:
         save_playoff_odds_csv(odds_df)

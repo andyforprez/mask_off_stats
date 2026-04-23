@@ -2,52 +2,52 @@ EXPECTED FINAL RANKING (FROM SIMULATION)
 ==================================================
 
 1. Roman_Furtatov - avg rank: 1.15
-2. Я ненавижу покер v.2 - avg rank: 3.04
-3. Гризли - avg rank: 3.13
+2. Я ненавижу покер v.2 - avg rank: 3.06
+3. Гризли - avg rank: 3.15
 4. E_ishutkin - avg rank: 3.28
-5. Руслан - avg rank: 5.81
-6. yakushevass - avg rank: 8.44
-7. дисциплина - avg rank: 9.10
-8. Бэндер - avg rank: 9.20
-9. Кинзу - avg rank: 10.06
-10. Драйв - avg rank: 10.80
-11. В азарт не входим - avg rank: 10.85
+5. Руслан - avg rank: 5.76
+6. yakushevass - avg rank: 8.41
+7. Бэндер - avg rank: 9.14
+8. дисциплина - avg rank: 9.16
+9. Кинзу - avg rank: 9.77
+10. В азарт не входим - avg rank: 10.71
+11. Драйв - avg rank: 11.03
 12. clayzid - avg rank: 11.78
-13. sl1dbygad - avg rank: 13.70
-14. Антуан Гризманн - avg rank: 13.96
-15. Kanti - avg rank: 14.43
-16. Котяра - avg rank: 15.04
-17. Mihmbox - avg rank: 16.14
-18. Niko - avg rank: 18.43
-19. Amaney - avg rank: 20.97
-20. ksuhony - avg rank: 21.49
-21. Добросердечный - avg rank: 22.62
-22. ПокерНЕок - avg rank: 23.67
-23. Obscur - avg rank: 24.61
-24. Vitos2049 - avg rank: 27.93
-25. rusya6996 - avg rank: 29.82
-26. Плейбой в карты - avg rank: 31.55
-27. nesmotri_v_shelll1 - avg rank: 32.08
-28. Викусик - avg rank: 33.12
-29. Yanchik_250 - avg rank: 33.71
-30. yankkk - avg rank: 35.46
-31. Кальян - avg rank: 36.36
-32. Дядя Витя - avg rank: 36.98
-33. Пассажир - avg rank: 37.15
-34. Настя дай стек - avg rank: 37.64
-35. Пиковая Дама - avg rank: 38.43
-36. Никитос - avg rank: 38.50
-37. Сан Саныч - avg rank: 38.68
-38. Добряк - avg rank: 38.76
-39. maria_merlot - avg rank: 39.21
-40. АРАМАИСКА - avg rank: 39.69
-41. Тихоня - avg rank: 40.24
-42. dama_pica - avg rank: 41.08
-43. kirienish - avg rank: 41.16
-44. Комарик - avg rank: 41.94
-45. cheremsha - avg rank: 43.86
-46. EliasPavlov - avg rank: 44.20
-47. @TryFraiz - avg rank: 46.31
-48. bogdansskii - avg rank: 46.70
-49. кинчоч - avg rank: 48.37
-50. Chinaski - avg rank: 48.49
+13. sl1dbygad - avg rank: 13.95
+14. Антуан Гризманн - avg rank: 14.21
+15. Kanti - avg rank: 14.52
+16. Котяра - avg rank: 15.03
+17. Mihmbox - avg rank: 16.19
+18. Niko - avg rank: 18.39
+19. Amaney - avg rank: 20.61
+20. ksuhony - avg rank: 21.23
+21. Добросердечный - avg rank: 22.72
+22. ПокерНЕок - avg rank: 23.80
+23. Obscur - avg rank: 24.60
+24. Vitos2049 - avg rank: 27.79
+25. rusya6996 - avg rank: 29.47
+26. Плейбой в карты - avg rank: 31.77
+27. nesmotri_v_shelll1 - avg rank: 32.11
+28. Викусик - avg rank: 33.23
+29. Yanchik_250 - avg rank: 34.17
+30. yankkk - avg rank: 35.53
+31. Пассажир - avg rank: 36.53
+32. Кальян - avg rank: 36.58
+33. Дядя Витя - avg rank: 37.18
+34. Настя дай стек - avg rank: 38.04
+35. Никитос - avg rank: 38.24
+36. Пиковая Дама - avg rank: 38.59
+37. Добряк - avg rank: 38.61
+38. Сан Саныч - avg rank: 38.79
+39. maria_merlot - avg rank: 39.46
+40. АРАМАИСКА - avg rank: 39.87
+41. Тихоня - avg rank: 40.51
+42. dama_pica - avg rank: 40.62
+43. kirienish - avg rank: 41.05
+44. Комарик - avg rank: 41.30
+45. cheremsha - avg rank: 44.12
+46. EliasPavlov - avg rank: 44.23
+47. @TryFraiz - avg rank: 46.45
+48. bogdansskii - avg rank: 46.62
+49. Chinaski - avg rank: 47.43
+50. кинчоч - avg rank: 48.40

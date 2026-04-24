@@ -2,7 +2,8 @@ from simulations.simulation import *
 from simulations.plots import *
 from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
-from openpyxl.formatting.rule import ColorScaleRule
+from openpyxl.formatting.rule import ColorScaleRule, CellIsRule
+from openpyxl.styles import PatternFill, Border, Side
 from os import startfile, path
 
 def run_full_simulation(df, player, n_sim=1000, inactive_players=None):
@@ -73,6 +74,8 @@ def save_playoff_odds_excel(df, path='data/playoff_odds.xlsx'):
     rank_cols = [f'Rank {i}' for i in range(1, 19)]
     df = df.sort_values(by=[top_col] + rank_cols, ascending=[False]*(1 + len(rank_cols)))
 
+    df.insert(1, 'Final Rank', range(1, len(df) + 1))
+
     wb = Workbook()
     ws = wb.active
     ws.title = 'Playoff Odds'
@@ -88,16 +91,32 @@ def save_playoff_odds_excel(df, path='data/playoff_odds.xlsx'):
     max_row = ws.max_row
     max_col = ws.max_column
 
-    start_col = 2
-    end_col = max_col
-
-    data_range = f'{ws.cell(row=2, column=start_col).coordinate}:{ws.cell(row=max_row, column=end_col).coordinate}'
-    color_rule = ColorScaleRule(
+    top18_range = f'{ws.cell(row=2, column=2).coordinate}:{ws.cell(row=max_row, column=2).coordinate}'
+    rank_prob_range = f'{ws.cell(row=2, column=4).coordinate}:{ws.cell(row=max_row, column=max_col).coordinate}'
+    gradient_rule = ColorScaleRule(
         start_type='num', start_value=0, start_color='FF0000',
         mid_type='percentile', mid_value=50, mid_color='FFFF00',
         end_type='num', end_value=1, end_color='00FF00'
     )
-    ws.conditional_formatting.add(data_range, color_rule)
+    ws.conditional_formatting.add(top18_range, gradient_rule)
+    ws.conditional_formatting.add(rank_prob_range, gradient_rule)
+
+    rank_col = 3
+    rank_range = f'{ws.cell(row=3, column=rank_col).coordinate}:{ws.cell(row=max_row, column=rank_col).coordinate}'
+    green_fill = PatternFill(start_color='00FF00', end_color='00FF00', fill_type='solid')
+    top18_rule = CellIsRule(
+        operator='lessThanOrEqual',
+        formula=['18'],
+        fill=green_fill
+    )
+    ws.conditional_formatting.add(rank_range, top18_rule)
+
+    red_line = Side(style='thick', color='FF0000')
+    border = Border(bottom=red_line)
+    for col in range(1, max_col + 1):
+        cell = ws.cell(row=20, column=col)
+        cell.border = border
+
     ws.freeze_panes = 'B2'
     wb.save(path)
 

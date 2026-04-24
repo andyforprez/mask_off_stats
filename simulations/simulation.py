@@ -352,7 +352,7 @@ def compute_playoff_odds(all_players, cutoff=18, eval_pool=50):
     df.columns = [f'Rank {i+1}' for i in range(eval_pool)]
 
     df = df / len(all_players)
-    df = df.iloc[:, :18]
+    df = df.iloc[:, :cutoff]
     df['Top 18 Prob'] = df.sum(axis=1)
     df = df.sort_values(by='Top 18 Prob', ascending=False)
     return df

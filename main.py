@@ -22,9 +22,9 @@ get_ranking_by_date(df, today)
 
 result = run_full_simulation(df, player, n_sim=1000, inactive_players=inactive_players)
 
-plot_cutoff_projection(result['real_cutoff'], result['sim_cutoff'], today, player, result['real_player'], result['sim_player'])
-run_rank_projection_pipeline(df, result['all_players'], today, 50, True, 100)
-run_playoff_odds_pipeline(result['all_players'], 18, 50, True, True)
+#plot_cutoff_projection(result['real_cutoff'], result['sim_cutoff'], today, player, result['real_player'], result['sim_player'])
+#run_rank_projection_pipeline(df, result['all_players'], today, 50, True, 100)
+run_playoff_odds_pipeline(result['all_players'], 19, 50, True, True)
 
 
 def graphs():

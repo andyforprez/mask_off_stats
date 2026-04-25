@@ -71,8 +71,13 @@ def save_playoff_odds_excel(df, path='data/playoff_odds.xlsx'):
     top_col = 'Top 18 Prob'
     cols = [top_col] + [c for c in df.columns if c != top_col]
     df = df[cols]
-    rank_cols = [f'Rank {i}' for i in range(1, 19)]
-    df = df.sort_values(by=[top_col] + rank_cols, ascending=[False]*(1 + len(rank_cols)))
+    df['Expected Rank'] = 0
+    for i in range(1, 20):
+        col = f'Rank {i}'
+        if col in df.columns:
+            df['Expected Rank'] += df[col] * i
+    df = df.sort_values(by=[top_col, 'Expected Rank'], ascending=[False, True])
+    df = df.drop(columns=['Expected Rank'])
 
     df.insert(1, 'Final Rank', range(1, len(df) + 1))
 
@@ -117,6 +122,7 @@ def save_playoff_odds_excel(df, path='data/playoff_odds.xlsx'):
         cell = ws.cell(row=21, column=col)
         cell.border = border
 
+    ws.column_dimensions['A'].width = 20
     ws.freeze_panes = 'B2'
     wb.save(path)
 

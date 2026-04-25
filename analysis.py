@@ -41,8 +41,6 @@ def save_averages(df, min_games=5, path='data/averages.txt'):
         f.write('=' * 50 + '\n\n')
         for i, (player, row) in enumerate(stats.iterrows(), 1):
             avg = row[('avg_points')]
-            games = int(row['games_played'])
-            total = int(row['total_points'])
             f.write(f'{i}. {player} - {avg:.2f} avg\n')
     print(f'Averages saved to {path}')
 
@@ -115,7 +113,7 @@ def type_averages(df, top_n=None, min_points=None):
     if min_points is not None:
         df_filtered = df_filtered[df_filtered['points'] > min_points]
 
-    avg_by_type = df_filtered.groupby('tournament_type')['points'].mean()
+    avg_by_type = df_filtered[df_filtered['points'] > 0].groupby('tournament_type')['points'].mean()
     plt.figure()
     avg_by_type.plot(kind='bar')
     title = 'Average Points by Tournament Type'

@@ -58,20 +58,35 @@ def build_player_profiles(df):
     #bounty metric
     bounty_df = df[df['tournament_type'] == 'bounty']
     bounty_avg = bounty_df.groupby('player_id')['bounties'].mean()
+    bounty_counts = bounty_df.groupby('player_id')['bounties'].count()
     global_bounty_avg = bounty_df['bounties'].mean() if len(bounty_df) > 0 else 1
-    bounty_skill = (bounty_avg / global_bounty_avg).fillna(1)
+    bounty_skill = {}
+    for player in player_avg.index:
+        avg = bounty_avg.get(player, global_bounty_avg)
+        count = bounty_counts.get(player, 0)
+        raw = avg / global_bounty_avg
+        shrink = count / (count + 5)
+        adjusted = 1 + (raw - 1) * shrink
+        adjusted = np.clip(adjusted, 0.7, 1.5)
+        bounty_skill[player] = adjusted
 
     #recency bias metric
     df_sorted = df.sort_values('date')
     recent_form = {}
-    for player, group in df_sorted.groupby('player_id'):
-        last_games = group.tail(5)
-        if len(last_games) == 0:
-            recent_form[player] = 1
-        else:
-            recent_avg = last_games['points'].mean()
-            overall_avg = player_avg[player] if player_avg[player] > 0 else 1
-            recent_form[player] = recent_avg / overall_avg
+    recent_dates = sorted(df['date'].unique())[-5:]
+    for player in player_avg.index:
+        player_games = df_sorted[df_sorted['player_id'] == player]
+        recent_games = player_games[player_games['date'].isin(recent_dates)]
+        points_list = []
+        for d in recent_dates:
+            game = recent_games[recent_games['date'] == d]
+            if len(game) > 0:
+                points_list.append(game['points'].values[0])
+            else:
+                points_list.append(0)
+        recent_avg = np.mean(points_list)
+        overall_avg = player_avg[player] if player_avg[player] > 0 else 1
+        recent_form[player] = recent_avg / overall_avg
 
     #experience metric
     max_games = player_days.max()

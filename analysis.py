@@ -154,7 +154,7 @@ def volatility_std(df, top_n, min_games):
     plt.figure()
     volatility.plot(kind='bar')
 
-    plt.title(f'Top {top_n} Lease Volatile Players')
+    plt.title(f'Top {top_n} Least Volatile Players')
     plt.xlabel('Player')
     plt.ylabel('Std Dev of Daily Gain')
     plt.xticks(rotation=90)

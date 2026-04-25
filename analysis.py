@@ -3,7 +3,7 @@ from collections import defaultdict
 import pandas as pd
 
 
-def get_ranking_by_date(df, target_date, output_file='data/rankings.txt'):
+def save_ranking_by_date(df, target_date, path='data/rankings.txt'):
     df = df.copy()
     df['date'] = pd.to_datetime(df['date'])
     target_date = pd.to_datetime(target_date)
@@ -18,15 +18,33 @@ def get_ranking_by_date(df, target_date, output_file='data/rankings.txt'):
         games_count[player] += 1
 
     sorted_players = sorted(last_points.items(), key=lambda x: x[1], reverse=True)
-    with open(output_file, 'w', encoding='utf-8') as f:
+    with open(path, 'w', encoding='utf-8') as f:
         f.write(f'RANKING AS OF {target_date.date()}\n')
         f.write('=' * 50 + '\n\n')
         for rank, (player, points) in enumerate(sorted_players, 1):
             f.write(
                 f'{rank}. {player} - {points} points ({games_count[player]} games)\n'
             )
-    print(f'Ranking saved to {output_file}')
+    print(f'Rankings saved to {path}')
     return sorted_players
+
+def save_averages(df, min_games=5, path='data/averages.txt'):
+    stats = df.groupby('player_id').agg(
+        total_points=('points', 'sum'),
+        games_played=('points', 'count')
+    )
+    stats['avg_points'] = stats['total_points'] / stats['games_played']
+    stats = stats[stats['games_played'] > min_games]
+    stats = stats.sort_values(by='avg_points', ascending=False)
+    with open(path, 'w', encoding='utf-8') as f:
+        f.write('AVERAGE POINTS PER GAME\n')
+        f.write('=' * 50 + '\n\n')
+        for i, (player, row) in enumerate(stats.iterrows(), 1):
+            avg = row[('avg_points')]
+            games = int(row['games_played'])
+            total = int(row['total_points'])
+            f.write(f'{i}. {player} - {avg:.2f} avg\n')
+    print(f'Averages saved to {path}')
 
 def player_ranking_over_time(df, player_name):
     player_df = df[df['player_id'] == player_name]

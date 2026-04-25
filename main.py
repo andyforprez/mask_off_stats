@@ -16,16 +16,9 @@ today = df['date'].max()
 player = 'Антуан Гризманн'
 inactive_players = {
     'Дядя Витя',
-    'Кесадилия'
+    'Кесадилия',
+    'Комарик'
 }
-get_ranking_by_date(df, today)
-
-result = run_full_simulation(df, player, n_sim=1000, inactive_players=inactive_players)
-
-plot_cutoff_projection(result['real_cutoff'], result['sim_cutoff'], today, player, result['real_player'], result['sim_player'])
-run_rank_projection_pipeline(df, result['all_players'], today, 50, True, 100)
-run_playoff_odds_pipeline(result['all_players'], 19, 30, True, True)
-
 
 def graphs():
     player_ranking_over_time(full_df, 'Антуан Гризманн')
@@ -38,3 +31,11 @@ def graphs():
     best_days(df, 18)
     attendance(df, 18)
     consistency_vs_attendance(df, 18, 5)
+save_ranking_by_date(df, today)
+save_averages(df)
+
+result = run_full_simulation(df, player, n_sim=1000, inactive_players=inactive_players)
+
+plot_cutoff_projection(result['real_cutoff'], result['sim_cutoff'], today, player, result['real_player'], result['sim_player'])
+run_rank_projection_pipeline(df, result['all_players'], today, 50, True, 100)
+run_playoff_odds_pipeline(result['all_players'], 19, 30, True, True)

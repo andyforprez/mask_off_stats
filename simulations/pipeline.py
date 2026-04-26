@@ -112,7 +112,7 @@ def save_playoff_odds_excel(df, path='data/playoff_odds.xlsx'):
     green_fill = PatternFill(start_color='00FF00', end_color='00FF00', fill_type='solid')
     top18_rule = CellIsRule(
         operator='lessThanOrEqual',
-        formula=['19'],
+        formula=['20'],
         fill=green_fill
     )
     ws.conditional_formatting.add(rank_range, top18_rule)
@@ -120,14 +120,14 @@ def save_playoff_odds_excel(df, path='data/playoff_odds.xlsx'):
     red_line = Side(style='thick', color='FF0000')
     border = Border(bottom=red_line)
     for col in range(1, max_col + 1):
-        cell = ws.cell(row=21, column=col)
+        cell = ws.cell(row=20+2, column=col)
         cell.border = border
 
     ws.column_dimensions['A'].width = 20
     ws.freeze_panes = 'B2'
     wb.save(path)
 
-def run_playoff_odds_pipeline(all_players, output_top=19, eval_pool=50, save_csv=True, save_excel=True, open_excel=True):
+def run_playoff_odds_pipeline(all_players, output_top=20, eval_pool=50, save_csv=True, save_excel=True, open_excel=True):
     odds_df = compute_playoff_odds(all_players, output_top, eval_pool)
     if save_csv:
         save_playoff_odds_csv(odds_df)

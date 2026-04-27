@@ -12,14 +12,12 @@
     --surface2:  #1e2129;
     --border:    #2a2d38;
     --accent:    #3b82f6;
-    /* New probability colors */
-    --prob-100:      #22c55e;   /* green */
-    --prob-high:     #4ade80;   /* lighter green 85-99.9 */
-    --prob-mid:      #facc15;   /* yellow 70-84.9 */
-    --prob-low:      #f97316;   /* orange 40-69.9 */
-    --prob-verylow:  #ef4444;   /* red <40 */
-    --prob-zero:     #5a5f72;   /* grey 0 */
-
+    --green-full: #22c55e;
+    --green-light: #4ade80;
+    --yellow:    #eab308;
+    --orange:    #f97316;
+    --red:       #ef4444;
+    --grey:      #5a5f72;
     --text:      #e2e4ed;
     --muted:     #5a5f72;
     --muted2:    #3a3f52;
@@ -224,14 +222,12 @@
     transition: opacity 0.12s;
   }
   .player-row:hover::before { opacity: 1; }
-
-  /* Zone-based left border colors */
-  .player-row.z100::before { background: var(--prob-100); }
-  .player-row.zhigh::before { background: var(--prob-high); }
-  .player-row.zmid::before { background: var(--prob-mid); }
-  .player-row.zlow::before { background: var(--prob-low); }
-  .player-row.zverylow::before { background: var(--prob-verylow); }
-  .player-row.zzero::before { background: var(--prob-zero); }
+  .player-row.zg-full::before { background: var(--green-full); }
+  .player-row.zg-light::before { background: var(--green-light); }
+  .player-row.zy::before { background: var(--yellow); }
+  .player-row.zo::before { background: var(--orange); }
+  .player-row.zr::before { background: var(--red); }
+  .player-row.zx::before { background: var(--grey); }
 
   /* rank badge */
   .rank-badge {
@@ -249,12 +245,12 @@
   .rk1 { background: linear-gradient(135deg,#c9972a,#7a5510); color:#fff; }
   .rk2 { background: linear-gradient(135deg,#8090a8,#505870); color:#fff; }
   .rk3 { background: linear-gradient(135deg,#b06040,#703020); color:#fff; }
-  .rk100 { background: rgba(34,197,94,0.15); color: var(--prob-100); }
-  .rkhigh { background: rgba(74,222,128,0.15); color: var(--prob-high); }
-  .rkmid { background: rgba(250,204,21,0.15); color: var(--prob-mid); }
-  .rklow { background: rgba(249,115,22,0.15); color: var(--prob-low); }
-  .rkverylow { background: rgba(239,68,68,0.15); color: var(--prob-verylow); }
-  .rkzero { background: var(--surface2); color: var(--muted); }
+  .rk-gfull { background: rgba(34,197,94,0.15); color: var(--green-full); }
+  .rk-glight { background: rgba(74,222,128,0.12); color: var(--green-light); }
+  .rk-yellow { background: rgba(234,179,8,0.15); color: var(--yellow); }
+  .rk-orange { background: rgba(249,115,22,0.15); color: var(--orange); }
+  .rk-red { background: rgba(239,68,68,0.15); color: var(--red); }
+  .rk-grey { background: var(--surface2); color: var(--grey); }
 
   /* name */
   .player-name {
@@ -266,7 +262,8 @@
     text-overflow: ellipsis;
     padding-right: 6px;
   }
-  .player-row.z100 .player-name { color: #fff; }
+  .player-row.zg-full .player-name,
+  .player-row.zg-light .player-name { color: #fff; }
 
   /* probability */
   .prob-col {
@@ -315,7 +312,7 @@
     font-weight: 600;
     letter-spacing: 1.2px;
     text-transform: uppercase;
-    color: var(--prob-100);
+    color: var(--green-full);
     white-space: nowrap;
   }
 
@@ -415,12 +412,12 @@
 </div>
 
 <div class="legend">
-  <div class="legend-item"><div class="dot" style="background:var(--prob-100)"></div>100%</div>
-  <div class="legend-item"><div class="dot" style="background:var(--prob-high)"></div>85–99.9%</div>
-  <div class="legend-item"><div class="dot" style="background:var(--prob-mid)"></div>70–84.9%</div>
-  <div class="legend-item"><div class="dot" style="background:var(--prob-low)"></div>40–69.9%</div>
-  <div class="legend-item"><div class="dot" style="background:var(--prob-verylow)"></div>&lt;40%</div>
-  <div class="legend-item"><div class="dot" style="background:var(--prob-zero)"></div>0%</div>
+  <div class="legend-item"><div class="dot" style="background:var(--green-full)"></div>Guaranteed</div>
+  <div class="legend-item"><div class="dot" style="background:var(--green-light)"></div>Likely</div>
+  <div class="legend-item"><div class="dot" style="background:var(--yellow)"></div>Bubble</div>
+  <div class="legend-item"><div class="dot" style="background:var(--orange)"></div>Bubble</div>
+  <div class="legend-item"><div class="dot" style="background:var(--red)"></div>Possible</div>
+  <div class="legend-item"><div class="dot" style="background:var(--grey)"></div>Eliminated</div>
 </div>
 
 <script>
@@ -447,30 +444,28 @@ function parseExpectedRanking(text) {
   return result;
 }
 
-// New zone function based on the requested color scheme
-function zone(p) {
-  if (p >= 0.9995) return '100';      // effectively 100%
-  if (p >= 0.85) return 'high';       // 85-99.9%
-  if (p >= 0.70) return 'mid';        // 70-84.9%
-  if (p >= 0.40) return 'low';        // 40-69.9%
-  if (p > 0.00) return 'verylow';     // less than 40%
-  return 'zero';                      // exactly 0
+function zoneAndColor(p) {
+  if (p >= 0.9995) return { zone: 'g-full', color: 'var(--green-full)' };
+  if (p >= 0.80)   return { zone: 'g-light', color: 'var(--green-light)' };
+  if (p >= 0.50)   return { zone: 'y', color: 'var(--yellow)' };
+  if (p >= 0.20)   return { zone: 'o', color: 'var(--orange)' };
+  if (p > 0.0)     return { zone: 'r', color: 'var(--red)' };
+  return { zone: 'x', color: 'var(--grey)' };
 }
 
-function probColor(p) {
-  if (p >= 0.9995) return 'var(--prob-100)';
-  if (p >= 0.85) return 'var(--prob-high)';
-  if (p >= 0.70) return 'var(--prob-mid)';
-  if (p >= 0.40) return 'var(--prob-low)';
-  if (p > 0.00) return 'var(--prob-verylow)';
-  return 'var(--prob-zero)';
-}
-
-function badgeClass(rank, z) {
+function badgeClass(rank, zoneCode) {
   if (rank === 1) return 'rk1';
   if (rank === 2) return 'rk2';
   if (rank === 3) return 'rk3';
-  return { '100':'rk100', 'high':'rkhigh', 'mid':'rkmid', 'low':'rklow', 'verylow':'rkverylow', 'zero':'rkzero' }[z] || 'rkzero';
+  const map = {
+    'g-full': 'rk-gfull',
+    'g-light': 'rk-glight',
+    'y': 'rk-yellow',
+    'o': 'rk-orange',
+    'r': 'rk-red',
+    'x': 'rk-grey'
+  };
+  return map[zoneCode] || 'rk-grey';
 }
 
 let allPlayers = [];
@@ -486,13 +481,12 @@ function render(players) {
   let cutoffDone = false;
 
   players.forEach((p, i) => {
-    const z = zone(p.top18Prob);
-    const color = probColor(p.top18Prob);
+    const { zone: zoneCode, color } = zoneAndColor(p.top18Prob);
     const barW = Math.round(p.top18Prob * 100);
     const probStr = (p.top18Prob * 100) >= 99.95 ? '100%'
                   : (p.top18Prob * 100).toFixed(1) + '%';
     const delay = Math.min(i * 18, 280);
-    const bc = badgeClass(p.displayRank, z);
+    const bc = badgeClass(p.displayRank, zoneCode);
 
     if (!cutoffDone && p.displayRank > 18) {
       html += `<div class="cutoff-divider"><span>── Playoff cutoff ──</span></div>`;
@@ -500,7 +494,7 @@ function render(players) {
     }
 
     html += `
-      <div class="player-row z${z}" style="animation-delay:${delay}ms">
+      <div class="player-row z${zoneCode}" style="animation-delay:${delay}ms">
         <div><div class="rank-badge ${bc}">${p.displayRank}</div></div>
         <div class="player-name">${p.player}</div>
         <div class="prob-col">

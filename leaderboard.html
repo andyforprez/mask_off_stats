@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>April Poker Season #3 — Playoff Odds</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #111318;
+    --surface:   #181b22;
+    --surface2:  #1e2129;
+    --border:    #2a2d38;
+    --accent:    #3b82f6;
+    /* New probability colors */
+    --prob-100:      #22c55e;   /* green */
+    --prob-high:     #4ade80;   /* lighter green 85-99.9 */
+    --prob-mid:      #facc15;   /* yellow 70-84.9 */
+    --prob-low:      #f97316;   /* orange 40-69.9 */
+    --prob-verylow:  #ef4444;   /* red <40 */
+    --prob-zero:     #5a5f72;   /* grey 0 */
+
+    --text:      #e2e4ed;
+    --muted:     #5a5f72;
+    --muted2:    #3a3f52;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    min-height: 100vh;
+    max-width: 560px;
+    margin: 0 auto;
+    padding-bottom: 60px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #5a2010 0%, #3a1a08 40%, #1a1210 100%);
+    padding: 24px 20px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      -45deg, transparent, transparent 20px,
+      rgba(255,255,255,0.015) 20px, rgba(255,255,255,0.015) 40px
+    );
+    pointer-events: none;
+  }
+
+  .hero-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+
+  .hero h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.3px;
+  }
+
+  .badge-active {
+    background: var(--accent);
+    color: #fff;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+
+  .hero-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.2px;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+  }
+
+  /* ── STATS ROW ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stat-cell {
+    padding: 14px 18px;
+    border-right: 1px solid var(--border);
+  }
+  .stat-cell:last-child { border-right: none; }
+
+  .stat-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+
+  .stat-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .stat-value.small {
+    font-size: 14px;
+    color: var(--text);
+    margin-top: 3px;
+  }
+
+  /* ── SEARCH ── */
+  .search-bar {
+    padding: 10px 14px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .search-inner { position: relative; }
+
+  .search-inner input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 12px 8px 32px;
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .search-inner input::placeholder { color: var(--muted); }
+  .search-inner input:focus { border-color: var(--accent); }
+
+  .search-inner svg {
+    position: absolute;
+    left: 9px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    pointer-events: none;
+  }
+
+  /* ── COL HEADERS ── */
+  .col-header {
+    display: grid;
+    grid-template-columns: 48px 1fr 88px;
+    padding: 8px 16px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .col-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .col-label.r { text-align: right; }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 8px 16px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── PLAYER LIST ── */
+  .player-list { background: var(--surface); }
+
+  .player-row {
+    display: grid;
+    grid-template-columns: 48px 1fr 88px;
+    align-items: center;
+    padding: 0 16px;
+    height: 54px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    transition: background 0.1s;
+    cursor: default;
+    animation: rowIn 0.22s ease both;
+  }
+
+  .player-row:hover { background: var(--surface2); }
+
+  .player-row::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px; bottom: 8px;
+    width: 3px;
+    border-radius: 0 2px 2px 0;
+    opacity: 0;
+    transition: opacity 0.12s;
+  }
+  .player-row:hover::before { opacity: 1; }
+
+  /* Zone-based left border colors */
+  .player-row.z100::before { background: var(--prob-100); }
+  .player-row.zhigh::before { background: var(--prob-high); }
+  .player-row.zmid::before { background: var(--prob-mid); }
+  .player-row.zlow::before { background: var(--prob-low); }
+  .player-row.zverylow::before { background: var(--prob-verylow); }
+  .player-row.zzero::before { background: var(--prob-zero); }
+
+  /* rank badge */
+  .rank-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rk1 { background: linear-gradient(135deg,#c9972a,#7a5510); color:#fff; }
+  .rk2 { background: linear-gradient(135deg,#8090a8,#505870); color:#fff; }
+  .rk3 { background: linear-gradient(135deg,#b06040,#703020); color:#fff; }
+  .rk100 { background: rgba(34,197,94,0.15); color: var(--prob-100); }
+  .rkhigh { background: rgba(74,222,128,0.15); color: var(--prob-high); }
+  .rkmid { background: rgba(250,204,21,0.15); color: var(--prob-mid); }
+  .rklow { background: rgba(249,115,22,0.15); color: var(--prob-low); }
+  .rkverylow { background: rgba(239,68,68,0.15); color: var(--prob-verylow); }
+  .rkzero { background: var(--surface2); color: var(--muted); }
+
+  /* name */
+  .player-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 6px;
+  }
+  .player-row.z100 .player-name { color: #fff; }
+
+  /* probability */
+  .prob-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+  }
+
+  .prob-pct {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .bar-track {
+    width: 68px;
+    height: 3px;
+    background: var(--muted2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.5s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* ── CUTOFF DIVIDER ── */
+  .cutoff-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 16px;
+    height: 30px;
+    background: rgba(34,197,94,0.05);
+    border-top: 1px dashed rgba(34,197,94,0.25);
+    border-bottom: 1px dashed rgba(34,197,94,0.25);
+  }
+
+  .cutoff-divider span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--prob-100);
+    white-space: nowrap;
+  }
+
+  .cutoff-divider::before,
+  .cutoff-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(34,197,94,0.15);
+  }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--border);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── STATES ── */
+  .state-msg {
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    font-family: 'IBM Plex Mono', monospace;
+    line-height: 1.8;
+  }
+
+  @keyframes rowIn {
+    from { opacity: 0; transform: translateX(-5px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-top">
+    <h1>April Poker Season #3</h1>
+    <div class="badge-active">ACTIVE</div>
+  </div>
+  <div class="hero-sub">Playoff Odds &nbsp;·&nbsp; Simulation Results</div>
+</div>
+
+<div class="stats-row">
+  <div class="stat-cell">
+    <div class="stat-label">Top Player Pool</div>
+    <div class="stat-value" id="statPlayers">—</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-label">Playoff Spots</div>
+    <div class="stat-value">18</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-label">Season End</div>
+    <div class="stat-value small">1 May 2026</div>
+  </div>
+</div>
+
+<div class="search-bar">
+  <div class="search-inner">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+    <input id="searchInput" type="text" placeholder="Search player…">
+  </div>
+</div>
+
+<div class="col-header">
+  <div class="col-label">#</div>
+  <div class="col-label">Player</div>
+  <div class="col-label r">Top 18</div>
+</div>
+
+<div class="section-label">Rankings by playoff probability</div>
+
+<div class="player-list" id="playerList">
+  <div class="state-msg">Loading…</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="dot" style="background:var(--prob-100)"></div>100%</div>
+  <div class="legend-item"><div class="dot" style="background:var(--prob-high)"></div>85–99.9%</div>
+  <div class="legend-item"><div class="dot" style="background:var(--prob-mid)"></div>70–84.9%</div>
+  <div class="legend-item"><div class="dot" style="background:var(--prob-low)"></div>40–69.9%</div>
+  <div class="legend-item"><div class="dot" style="background:var(--prob-verylow)"></div>&lt;40%</div>
+  <div class="legend-item"><div class="dot" style="background:var(--prob-zero)"></div>0%</div>
+</div>
+
+<script>
+const PLAYOFF_ODDS_CSV     = 'data/playoff_odds.csv';
+const EXPECTED_RANKING_TXT = 'data/expected_final_ranking.txt';
+
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const headers = lines[0].split(',').map(h => h.trim());
+  return lines.slice(1).map(line => {
+    const cols = line.split(',');
+    const obj = {};
+    headers.forEach((h, i) => obj[h] = (cols[i] || '').trim());
+    return obj;
+  });
+}
+
+function parseExpectedRanking(text) {
+  const result = {};
+  for (const line of text.split('\n')) {
+    const m = line.match(/^\s*(\d+)\.\s+(.+?)\s+-\s+avg rank:\s+([\d.]+)/);
+    if (m) result[m[2].trim()] = { listRank: parseInt(m[1]), avgRank: parseFloat(m[3]) };
+  }
+  return result;
+}
+
+// New zone function based on the requested color scheme
+function zone(p) {
+  if (p >= 0.9995) return '100';      // effectively 100%
+  if (p >= 0.85) return 'high';       // 85-99.9%
+  if (p >= 0.70) return 'mid';        // 70-84.9%
+  if (p >= 0.40) return 'low';        // 40-69.9%
+  if (p > 0.00) return 'verylow';     // less than 40%
+  return 'zero';                      // exactly 0
+}
+
+function probColor(p) {
+  if (p >= 0.9995) return 'var(--prob-100)';
+  if (p >= 0.85) return 'var(--prob-high)';
+  if (p >= 0.70) return 'var(--prob-mid)';
+  if (p >= 0.40) return 'var(--prob-low)';
+  if (p > 0.00) return 'var(--prob-verylow)';
+  return 'var(--prob-zero)';
+}
+
+function badgeClass(rank, z) {
+  if (rank === 1) return 'rk1';
+  if (rank === 2) return 'rk2';
+  if (rank === 3) return 'rk3';
+  return { '100':'rk100', 'high':'rkhigh', 'mid':'rkmid', 'low':'rklow', 'verylow':'rkverylow', 'zero':'rkzero' }[z] || 'rkzero';
+}
+
+let allPlayers = [];
+
+function render(players) {
+  const list = document.getElementById('playerList');
+  if (!players.length) {
+    list.innerHTML = `<div class="state-msg">No players found.</div>`;
+    return;
+  }
+
+  let html = '';
+  let cutoffDone = false;
+
+  players.forEach((p, i) => {
+    const z = zone(p.top18Prob);
+    const color = probColor(p.top18Prob);
+    const barW = Math.round(p.top18Prob * 100);
+    const probStr = (p.top18Prob * 100) >= 99.95 ? '100%'
+                  : (p.top18Prob * 100).toFixed(1) + '%';
+    const delay = Math.min(i * 18, 280);
+    const bc = badgeClass(p.displayRank, z);
+
+    if (!cutoffDone && p.displayRank > 18) {
+      html += `<div class="cutoff-divider"><span>── Playoff cutoff ──</span></div>`;
+      cutoffDone = true;
+    }
+
+    html += `
+      <div class="player-row z${z}" style="animation-delay:${delay}ms">
+        <div><div class="rank-badge ${bc}">${p.displayRank}</div></div>
+        <div class="player-name">${p.player}</div>
+        <div class="prob-col">
+          <span class="prob-pct" style="color:${color}">${probStr}</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:${barW}%;background:${color}"></div>
+          </div>
+        </div>
+      </div>`;
+  });
+
+  list.innerHTML = html;
+}
+
+document.getElementById('searchInput').addEventListener('input', function() {
+  const q = this.value.toLowerCase().trim();
+  render(q ? allPlayers.filter(p => p.player.toLowerCase().includes(q)) : allPlayers);
+});
+
+async function loadData() {
+  try {
+    const [csvText, rankText] = await Promise.all([
+      fetch(PLAYOFF_ODDS_CSV).then(r => { if (!r.ok) throw new Error('playoff_odds.csv not found'); return r.text(); }),
+      fetch(EXPECTED_RANKING_TXT).then(r => { if (!r.ok) throw new Error('expected_final_ranking.txt not found'); return r.text(); }),
+    ]);
+
+    const csvRows  = parseCSV(csvText);
+    const expRanks = parseExpectedRanking(rankText);
+
+    const players = csvRows.map(row => {
+      const keys   = Object.keys(row);
+      const player = row[keys[0]];
+      const top18  = parseFloat(row['Top 18 Prob'] || '0');
+      const exp    = expRanks[player];
+      return {
+        player,
+        top18Prob: isNaN(top18) ? 0 : top18,
+        avgRank:   exp ? exp.avgRank : null,
+      };
+    }).filter(p => p.player);
+
+    // Sort by playoff odds descending first, then by expected rank ascending
+    players.sort((a, b) => {
+      if (a.top18Prob !== b.top18Prob) {
+        return b.top18Prob - a.top18Prob;
+      }
+      const rankA = a.avgRank;
+      const rankB = b.avgRank;
+      if (rankA !== null && rankB !== null) {
+        return rankA - rankB;
+      }
+      if (rankA !== null) return -1;
+      if (rankB !== null) return 1;
+      return 0;
+    });
+
+    players.forEach((p, i) => p.displayRank = i + 1);
+    allPlayers = players;
+
+    document.getElementById('statPlayers').textContent = players.length;
+    render(allPlayers);
+
+  } catch (err) {
+    document.getElementById('playerList').innerHTML = `
+      <div class="state-msg">
+        Could not load data.<br><br>
+        Place <code>data/playoff_odds.csv</code> and<br>
+        <code>data/expected_final_ranking.txt</code><br>
+        next to this HTML and serve via a web server.<br><br>
+        <small style="color:#444">${err.message}</small>
+      </div>`;
+  }
+}
+
+loadData();
+</script>
+</body>
+</html>

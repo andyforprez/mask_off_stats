@@ -164,7 +164,7 @@ def volatility_std(df, top_n, min_games):
         df_filtered[df_filtered['player_id'].isin(top_players)]
         .groupby('player_id')['points']
         .std()
-        .sort_values(ascending=False)
+        .sort_values(ascending=True)
     )
 
     plt.figure()

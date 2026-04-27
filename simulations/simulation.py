@@ -136,16 +136,25 @@ def build_future_schedule(start_date, end_date):
         'Sunday': 'triple shot'
     }
 
+    SPECIAL_BOUNTY_DATES = {
+        '2026-05-01'
+    }
+
     dates = pd.date_range(start=start_date, end=end_date)
     schedule = []
 
     for date in dates:
+        date_str = str(date.date())
         day_name = date.day_name()
 
-        if day_name in WEEKDAY_TO_TYPE:
+        if date_str in SPECIAL_BOUNTY_DATES:
+            t_type = 'bounty'
+        else:
+            t_type = WEEKDAY_TO_TYPE.get(day_name)
+        if t_type:
             schedule.append({
                 'date': date.date(),
-                'tournament_type': WEEKDAY_TO_TYPE[day_name]
+                'tournament_type': t_type
             })
     return schedule
 
@@ -195,7 +204,7 @@ def simulate_one_run(start_standings, profiles, schedule):
 
         cutoff_over_time.append({
             'date': day['date'],
-            'cutoff': ranked[20][1]
+            'cutoff': ranked[18][1]
         })
     return cutoff_over_time
 
@@ -216,7 +225,7 @@ def run_simulations(df, profiles, schedule, n_sim=1000, inactive_players=None):
 
             cutoff_series.append({
                 'date': day['date'],
-                'cutoff': ranked[20][1]
+                'cutoff': ranked[18][1]
             })
 
             rank_lookup = {p : r for r, (p, _) in enumerate(ranked, 1)}
@@ -248,7 +257,7 @@ def compute_real_cutoff(df):
         day_df = df[df['date'] <= date]
         latest = day_df.sort_values('date').groupby('player_id').tail(1)
         ranked = latest.sort_values('cumulative_points', ascending=False).reset_index(drop=True)
-        cutoff = ranked.iloc[20]['cumulative_points']
+        cutoff = ranked.iloc[18]['cumulative_points']
         cutoffs.append({
             'date': date,
             'cutoff': cutoff
@@ -350,7 +359,7 @@ def get_real_player_rank_path(df, player_id):
         })
     return ranks
 
-def compute_playoff_odds(all_players, cutoff=20, eval_pool=50):
+def compute_playoff_odds(all_players, cutoff=18, eval_pool=50):
     first_sim = all_players[0]
     ranked_first = sorted(first_sim.items(), key=lambda x: extract_final_score(x[1]), reverse=True)[:eval_pool]
     players = [p for p, _ in ranked_first]

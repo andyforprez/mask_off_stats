@@ -17,7 +17,9 @@ player = 'Антуан Гризманн'
 inactive_players = {
     'Дядя Витя',
     'Кесадилия',
-    'Комарик'
+    'Комарик',
+    'E_ishutkin',
+    'yakushevass'
 }
 
 def graphs():

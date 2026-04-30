@@ -1,68 +1,72 @@
 AVERAGE POINTS PER GAME
 ==================================================
 
-1. Антуан Гризманн - 664.17 avg
-2. Mihmbox - 643.75 avg
-3. Гризли - 595.71 avg
-4. Roman_Furtatov - 586.84 avg
-5. Руслан - 514.71 avg
-6. Я ненавижу покер v.2 - 510.53 avg
-7. Добросердечный - 495.50 avg
-8. Amaney - 484.38 avg
-9. Драйв - 483.08 avg
-10. clayzid - 480.38 avg
-11. Тихоня - 474.17 avg
-12. E_ishutkin - 461.67 avg
-13. Кинзу - 449.00 avg
-14. ПокерНЕок - 442.27 avg
-15. Комарик - 431.67 avg
-16. Кальян - 430.00 avg
-17. yakushevass - 421.56 avg
-18. Бэндер - 419.64 avg
-19. Kanti - 412.00 avg
-20. В азарт не входим - 411.88 avg
-21. дисциплина - 405.33 avg
-22. Пассажир - 402.50 avg
-23. ksuhony - 377.00 avg
-24. Котяра - 370.29 avg
-25. cheremsha - 370.00 avg
-26. EliasPavlov - 365.00 avg
-27. @TryFraiz - 363.75 avg
-28. sl1dbygad - 354.58 avg
-29. Niko - 354.44 avg
-30. Пиковая Дама - 350.62 avg
-31. maria_merlot - 340.00 avg
-32. АРАМАИСКА - 337.86 avg
-33. Сокол - 336.43 avg
-34. Vitos2049 - 328.33 avg
-35. finch79 - 320.00 avg
-36. bogdansskii - 319.29 avg
-37. ЭтоМойНик - 314.29 avg
-38. Bushido - 296.11 avg
-39. Викусик - 294.17 avg
-40. Chesters - 294.00 avg
-41. Chinaski - 287.22 avg
-42. Obscur - 284.72 avg
-43. yankkk - 283.00 avg
-44. кинчоч - 280.00 avg
-45. Настя дай стек - 276.82 avg
-46. nesmotri_v_shelll1 - 275.83 avg
-47. Плейбой в карты - 268.85 avg
-48. rusya6996 - 268.75 avg
-49. Al - 264.38 avg
-50. Retbin - 248.75 avg
-51. Yanchik_250 - 242.50 avg
-52. Никитос - 239.55 avg
-53. Staryii - 227.00 avg
-54. Rik_dds - 222.69 avg
-55. дюдю221 - 218.33 avg
-56. Gluckspilz8 - 207.22 avg
-57. Сан Саныч - 206.25 avg
-58. 3y6a - 205.00 avg
-59. dolMy - 204.17 avg
-60. Ромчик - 192.78 avg
-61. Стич - 160.71 avg
-62. sasha12039 - 159.44 avg
-63. tt1ma23 - 144.17 avg
-64. dunkaeva - 139.17 avg
-65. Great Teacher Onizuka - 107.50 avg
+1. Антуан Гризманн - 636.92 avg
+2. Mihmbox - 605.56 avg
+3. Гризли - 597.33 avg
+4. Roman_Furtatov - 582.50 avg
+5. Руслан - 559.44 avg
+6. Amaney - 519.44 avg
+7. Я ненавижу покер v.2 - 517.50 avg
+8. Добросердечный - 511.36 avg
+9. Драйв - 498.57 avg
+10. clayzid - 493.21 avg
+11. ПокерНЕок - 485.42 avg
+12. Тихоня - 474.17 avg
+13. Кальян - 471.25 avg
+14. Сокол - 466.88 avg
+15. E_ishutkin - 461.67 avg
+16. В азарт не входим - 454.71 avg
+17. MMM - 454.17 avg
+18. Пассажир - 450.00 avg
+19. Кинзу - 447.81 avg
+20. дисциплина - 447.50 avg
+21. Бэндер - 443.00 avg
+22. Комарик - 431.67 avg
+23. yakushevass - 421.56 avg
+24. ksuhony - 404.69 avg
+25. Kanti - 401.25 avg
+26. Котяра - 399.72 avg
+27. sl1dbygad - 375.77 avg
+28. cheremsha - 370.00 avg
+29. Пиковая Дама - 369.44 avg
+30. @TryFraiz - 363.75 avg
+31. Niko - 348.95 avg
+32. EliasPavlov - 346.36 avg
+33. АРАМАИСКА - 345.62 avg
+34. Vitos2049 - 343.44 avg
+35. Bushido - 320.50 avg
+36. finch79 - 320.00 avg
+37. bogdansskii - 319.29 avg
+38. ЭтоМойНик - 314.29 avg
+39. maria_merlot - 313.33 avg
+40. lavr - 304.17 avg
+41. Obscur - 303.42 avg
+42. Chesters - 294.00 avg
+43. Викусик - 293.08 avg
+44. Chinaski - 291.50 avg
+45. Настя дай стек - 283.75 avg
+46. yankkk - 283.00 avg
+47. кинчоч - 280.00 avg
+48. nesmotri_v_shelll1 - 275.83 avg
+49. rusya6996 - 268.75 avg
+50. Al - 264.38 avg
+51. Плейбой в карты - 263.93 avg
+52. Mark - 256.67 avg
+53. Retbin - 248.75 avg
+54. Yanchik_250 - 240.33 avg
+55. Никитос - 239.55 avg
+56. Rik_dds - 236.07 avg
+57. Staryii - 227.00 avg
+58. дюдю221 - 218.33 avg
+59. Gluckspilz8 - 207.22 avg
+60. Сан Саныч - 206.25 avg
+61. 3y6a - 205.00 avg
+62. dolMy - 204.17 avg
+63. Ромчик - 185.50 avg
+64. Стич - 160.71 avg
+65. sasha12039 - 159.44 avg
+66. tt1ma23 - 144.17 avg
+67. dunkaeva - 143.57 avg
+68. Great Teacher Onizuka - 105.00 avg
+69. Mozilo - 100.00 avg

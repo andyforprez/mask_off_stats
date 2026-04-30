@@ -222,12 +222,12 @@
     transition: opacity 0.12s;
   }
   .player-row:hover::before { opacity: 1; }
-  .player-row.zg-full::before { background: var(--green-full); }
+  .player-row.zg-full::before  { background: var(--green-full); }
   .player-row.zg-light::before { background: var(--green-light); }
-  .player-row.zy::before { background: var(--yellow); }
-  .player-row.zo::before { background: var(--orange); }
-  .player-row.zr::before { background: var(--red); }
-  .player-row.zx::before { background: var(--grey); }
+  .player-row.zy::before       { background: var(--yellow); }
+  .player-row.zo::before       { background: var(--orange); }
+  .player-row.zr::before       { background: var(--red); }
+  .player-row.zx::before       { background: var(--grey); }
 
   /* rank badge */
   .rank-badge {
@@ -242,15 +242,15 @@
     justify-content: center;
   }
 
-  .rk1 { background: linear-gradient(135deg,#c9972a,#7a5510); color:#fff; }
-  .rk2 { background: linear-gradient(135deg,#8090a8,#505870); color:#fff; }
-  .rk3 { background: linear-gradient(135deg,#b06040,#703020); color:#fff; }
-  .rk-gfull { background: rgba(34,197,94,0.15); color: var(--green-full); }
+  .rk1       { background: linear-gradient(135deg,#c9972a,#7a5510); color:#fff; }
+  .rk2       { background: linear-gradient(135deg,#8090a8,#505870); color:#fff; }
+  .rk3       { background: linear-gradient(135deg,#b06040,#703020); color:#fff; }
+  .rk-gfull  { background: rgba(34,197,94,0.15);  color: var(--green-full); }
   .rk-glight { background: rgba(74,222,128,0.12); color: var(--green-light); }
-  .rk-yellow { background: rgba(234,179,8,0.15); color: var(--yellow); }
+  .rk-yellow { background: rgba(234,179,8,0.15);  color: var(--yellow); }
   .rk-orange { background: rgba(249,115,22,0.15); color: var(--orange); }
-  .rk-red { background: rgba(239,68,68,0.15); color: var(--red); }
-  .rk-grey { background: var(--surface2); color: var(--grey); }
+  .rk-red    { background: rgba(239,68,68,0.15);  color: var(--red); }
+  .rk-grey   { background: var(--surface2);       color: var(--grey); }
 
   /* name */
   .player-name {
@@ -385,8 +385,8 @@
     <div class="stat-value">18</div>
   </div>
   <div class="stat-cell">
-    <div class="stat-label">Season End</div>
-    <div class="stat-value small">1 May 2026</div>
+    <div class="stat-label">Last Game</div>
+    <div class="stat-value small" id="statLastDate">—</div>
   </div>
 </div>
 
@@ -415,7 +415,7 @@
   <div class="legend-item"><div class="dot" style="background:var(--green-full)"></div>Guaranteed</div>
   <div class="legend-item"><div class="dot" style="background:var(--green-light)"></div>Likely</div>
   <div class="legend-item"><div class="dot" style="background:var(--yellow)"></div>Bubble</div>
-  <div class="legend-item"><div class="dot" style="background:var(--orange)"></div>Bubble</div>
+  <div class="legend-item"><div class="dot" style="background:var(--orange)"></div>Long shot</div>
   <div class="legend-item"><div class="dot" style="background:var(--red)"></div>Possible</div>
   <div class="legend-item"><div class="dot" style="background:var(--grey)"></div>Eliminated</div>
 </div>
@@ -423,6 +423,7 @@
 <script>
 const PLAYOFF_ODDS_CSV     = 'data/playoff_odds.csv';
 const EXPECTED_RANKING_TXT = 'data/expected_final_ranking.txt';
+const RAW_DATA_CSV         = 'data/raw_data.csv';
 
 function parseCSV(text) {
   const lines = text.trim().split('\n');
@@ -444,28 +445,47 @@ function parseExpectedRanking(text) {
   return result;
 }
 
+// Extract the max date from raw_data.csv without parsing every column —
+// just find the "date" column index and scan all rows for the latest value.
+function extractLastDate(text) {
+  const lines = text.trim().split('\n');
+  const headers = lines[0].split(',').map(h => h.trim());
+  const dateIdx = headers.indexOf('date');
+  if (dateIdx === -1) return null;
+
+  let maxDate = '';
+  for (let i = 1; i < lines.length; i++) {
+    const cols = lines[i].split(',');
+    const d = (cols[dateIdx] || '').trim();
+    if (d > maxDate) maxDate = d;   // ISO strings sort lexicographically
+  }
+  return maxDate || null;
+}
+
+// Format "2026-04-26" → "26 Apr 2026"
+function formatDate(iso) {
+  if (!iso) return '—';
+  const [y, m, d] = iso.split('-').map(Number);
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${d} ${months[m - 1]} ${y}`;
+}
+
 function zoneAndColor(p) {
-  if (p >= 0.9995) return { zone: 'g-full', color: 'var(--green-full)' };
+  if (p >= 0.9995) return { zone: 'g-full',  color: 'var(--green-full)' };
   if (p >= 0.80)   return { zone: 'g-light', color: 'var(--green-light)' };
-  if (p >= 0.50)   return { zone: 'y', color: 'var(--yellow)' };
-  if (p >= 0.20)   return { zone: 'o', color: 'var(--orange)' };
-  if (p > 0.0)     return { zone: 'r', color: 'var(--red)' };
-  return { zone: 'x', color: 'var(--grey)' };
+  if (p >= 0.50)   return { zone: 'y',       color: 'var(--yellow)' };
+  if (p >= 0.20)   return { zone: 'o',       color: 'var(--orange)' };
+  if (p >  0.0)    return { zone: 'r',       color: 'var(--red)' };
+  return                   { zone: 'x',      color: 'var(--grey)' };
 }
 
 function badgeClass(rank, zoneCode) {
   if (rank === 1) return 'rk1';
   if (rank === 2) return 'rk2';
   if (rank === 3) return 'rk3';
-  const map = {
-    'g-full': 'rk-gfull',
-    'g-light': 'rk-glight',
-    'y': 'rk-yellow',
-    'o': 'rk-orange',
-    'r': 'rk-red',
-    'x': 'rk-grey'
-  };
-  return map[zoneCode] || 'rk-grey';
+  return { 'g-full':'rk-gfull', 'g-light':'rk-glight',
+           'y':'rk-yellow', 'o':'rk-orange',
+           'r':'rk-red',    'x':'rk-grey' }[zoneCode] || 'rk-grey';
 }
 
 let allPlayers = [];
@@ -482,11 +502,11 @@ function render(players) {
 
   players.forEach((p, i) => {
     const { zone: zoneCode, color } = zoneAndColor(p.top18Prob);
-    const barW = Math.round(p.top18Prob * 100);
+    const barW    = Math.round(p.top18Prob * 100);
     const probStr = (p.top18Prob * 100) >= 99.95 ? '100%'
                   : (p.top18Prob * 100).toFixed(1) + '%';
-    const delay = Math.min(i * 18, 280);
-    const bc = badgeClass(p.displayRank, zoneCode);
+    const delay   = Math.min(i * 18, 280);
+    const bc      = badgeClass(p.displayRank, zoneCode);
 
     if (!cutoffDone && p.displayRank > 18) {
       html += `<div class="cutoff-divider"><span>── Playoff cutoff ──</span></div>`;
@@ -516,11 +536,17 @@ document.getElementById('searchInput').addEventListener('input', function() {
 
 async function loadData() {
   try {
-    const [csvText, rankText] = await Promise.all([
-      fetch(PLAYOFF_ODDS_CSV).then(r => { if (!r.ok) throw new Error('playoff_odds.csv not found'); return r.text(); }),
+    const [csvText, rankText, rawText] = await Promise.all([
+      fetch(PLAYOFF_ODDS_CSV).then(r     => { if (!r.ok) throw new Error('playoff_odds.csv not found'); return r.text(); }),
       fetch(EXPECTED_RANKING_TXT).then(r => { if (!r.ok) throw new Error('expected_final_ranking.txt not found'); return r.text(); }),
+      fetch(RAW_DATA_CSV).then(r         => { if (!r.ok) throw new Error('raw_data.csv not found'); return r.text(); }),
     ]);
 
+    // ── Last game date from raw_data.csv ──
+    const lastDate = extractLastDate(rawText);
+    document.getElementById('statLastDate').textContent = formatDate(lastDate);
+
+    // ── Playoff odds ──
     const csvRows  = parseCSV(csvText);
     const expRanks = parseExpectedRanking(rankText);
 
@@ -536,18 +562,12 @@ async function loadData() {
       };
     }).filter(p => p.player);
 
-    // Sort by playoff odds descending first, then by expected rank ascending
+    // Sort: top18Prob descending; ties broken by avgRank ascending
     players.sort((a, b) => {
-      if (a.top18Prob !== b.top18Prob) {
-        return b.top18Prob - a.top18Prob;
-      }
-      const rankA = a.avgRank;
-      const rankB = b.avgRank;
-      if (rankA !== null && rankB !== null) {
-        return rankA - rankB;
-      }
-      if (rankA !== null) return -1;
-      if (rankB !== null) return 1;
+      if (b.top18Prob !== a.top18Prob) return b.top18Prob - a.top18Prob;
+      if (a.avgRank !== null && b.avgRank !== null) return a.avgRank - b.avgRank;
+      if (a.avgRank !== null) return -1;
+      if (b.avgRank !== null) return  1;
       return 0;
     });
 
@@ -561,8 +581,9 @@ async function loadData() {
     document.getElementById('playerList').innerHTML = `
       <div class="state-msg">
         Could not load data.<br><br>
-        Place <code>data/playoff_odds.csv</code> and<br>
-        <code>data/expected_final_ranking.txt</code><br>
+        Place <code>data/playoff_odds.csv</code>,<br>
+        <code>data/expected_final_ranking.txt</code> and<br>
+        <code>data/raw_data.csv</code><br>
         next to this HTML and serve via a web server.<br><br>
         <small style="color:#444">${err.message}</small>
       </div>`;

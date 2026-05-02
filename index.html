@@ -508,7 +508,7 @@ function render(players) {
     const delay   = Math.min(i * 18, 280);
     const bc      = badgeClass(p.displayRank, zoneCode);
 
-    if (!cutoffDone && p.displayRank > 18) {
+    if (!cutoffDone && p.displayRank > 19) {
       html += `<div class="cutoff-divider"><span>── Playoff cutoff ──</span></div>`;
       cutoffDone = true;
     }

@@ -16,7 +16,16 @@ def build_player_profiles(df):
     player_avg = df.groupby('player_id')['points'].mean()
     player_std = df.groupby('player_id')['points'].std().fillna(0)
     player_days = df.groupby('player_id')['date'].nunique()
-    attendance_rate = player_days / total_days
+
+    attendance_alpha = 2
+    attendance_beta = 2
+    attendance_rate = (player_days + attendance_alpha) / (total_days + attendance_alpha + attendance_beta)
+
+    global_std = df['points'].std()
+    if pd.isna(global_std) or global_std == 0:
+        global_std == 50
+    std_floor = max(global_std * 0.25, 20)
+    player_std = player_std.combine(player_avg * 0.15, max).clip(lower=std_floor)
 
     #low sample penalty
     low_sample_penalty = {}
@@ -357,7 +366,16 @@ def get_real_player_rank_path(df, player_id):
         })
     return ranks
 
-def compute_playoff_odds(all_players, cutoff=18, eval_pool=50):
+def compute_sample_multiplier(games_played, min_games_for_full=10, min_multiplier=0.5):
+    if games_played is None or games_played <= 0:
+        return min_multiplier
+    if games_played >= min_games_for_full:
+        return 1.0
+    span = 1.0 - min_multiplier
+    return min_multiplier + (games_played / min_games_for_full) * span
+
+
+def compute_playoff_odds(all_players, cutoff=18, eval_pool=50, games_played=None, min_games_for_full=10, min_multiplier=0.5):
     first_sim = all_players[0]
     ranked_first = sorted(first_sim.items(), key=lambda x: extract_final_score(x[1]), reverse=True)[:eval_pool]
     players = [p for p, _ in ranked_first]
@@ -376,6 +394,19 @@ def compute_playoff_odds(all_players, cutoff=18, eval_pool=50):
     df = df / len(all_players)
     df = df.iloc[:, :cutoff]
     df['Top 18 Prob'] = df.sum(axis=1)
+    df['Raw Top 18 Prob'] = df.sum(axis=1)
+
+    if games_played is not None:
+        multipliers = {
+            player: compute_sample_multiplier(games_played.get(player, 0), min_games_for_full, min_multiplier)
+            for player in df.index
+        }
+        df['Sample Multiplier'] = pd.Series(multipliers)
+        df['Top 18 Prob'] = df['Raw Top 18 Prob'] * df['Sample Multiplier']
+    else:
+        df['Sample Multiplier'] = 1.0
+        df['Top 18 Prob'] = df['Raw Top 18 Prob']
+
     df = df.sort_values(by='Top 18 Prob', ascending=False)
     return df
 

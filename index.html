@@ -470,6 +470,13 @@ function formatDate(iso) {
   return `${d} ${months[m - 1]} ${y}`;
 }
 
+function normalizeProbability(value) {
+  const n = parseFloat(value);
+  if (isNaN(n)) return 0;
+  const scaled = n > 1 ? n / 100 : n;
+  return Math.max(0, Math.min(1, scaled));
+}
+
 function zoneAndColor(p) {
   if (p >= 0.9995) return { zone: 'g-full',  color: 'var(--green-full)' };
   if (p >= 0.80)   return { zone: 'g-light', color: 'var(--green-light)' };
@@ -553,11 +560,11 @@ async function loadData() {
     const players = csvRows.map(row => {
       const keys   = Object.keys(row);
       const player = row[keys[0]];
-      const top18  = parseFloat(row['Top 18 Prob'] || '0');
+      const top18  = normalizeProbability(row['Top 18 Prob'] || '0');
       const exp    = expRanks[player];
       return {
         player,
-        top18Prob: isNaN(top18) ? 0 : top18,
+        top18Prob: top18,
         avgRank:   exp ? exp.avgRank : null,
       };
     }).filter(p => p.player);

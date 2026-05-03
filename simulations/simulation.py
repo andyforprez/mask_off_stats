@@ -136,9 +136,7 @@ def build_future_schedule(start_date, end_date):
         'Sunday': 'triple shot'
     }
 
-    SPECIAL_BOUNTY_DATES = {
-        '2026-05-01'
-    }
+    SPECIAL_BOUNTY_DATES = {}
 
     dates = pd.date_range(start=start_date, end=end_date)
     schedule = []

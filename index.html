@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>April Poker Season #3 — Playoff Odds</title>
+<title>May Poker Season #4 — Playoff Odds</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -369,7 +369,7 @@
 
 <div class="hero">
   <div class="hero-top">
-    <h1>April Poker Season #3</h1>
+    <h1>May Poker Season #4</h1>
     <div class="badge-active">ACTIVE</div>
   </div>
   <div class="hero-sub">Playoff Odds &nbsp;·&nbsp; Simulation Results</div>
@@ -508,7 +508,7 @@ function render(players) {
     const delay   = Math.min(i * 18, 280);
     const bc      = badgeClass(p.displayRank, zoneCode);
 
-    if (!cutoffDone && p.displayRank > 19) {
+    if (!cutoffDone && p.displayRank > 18) {
       html += `<div class="cutoff-divider"><span>── Playoff cutoff ──</span></div>`;
       cutoffDone = true;
     }

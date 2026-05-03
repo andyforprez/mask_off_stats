@@ -8,10 +8,10 @@ from os import startfile, path
 
 def run_full_simulation(df, player, n_sim=1000, inactive_players=None):
     today = df['date'].max()
-    if is_season_over(today, '2026-05-01'):
+    if is_season_over(today, '2026-05-30'):
         return build_final_results(df, player)
 
-    schedule = build_future_schedule(today + pd.Timedelta(days=1), '2026-05-01')
+    schedule = build_future_schedule(today + pd.Timedelta(days=1), '2026-05-30')
     profiles = build_player_profiles(df)
 
     real_cutoff = compute_real_cutoff(df)

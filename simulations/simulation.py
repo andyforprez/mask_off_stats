@@ -394,7 +394,6 @@ def compute_playoff_odds(all_players, cutoff=18, eval_pool=50, games_played=None
 
     df = df / len(all_players)
     df = df.iloc[:, :cutoff]
-    df['Top 18 Prob'] = df.sum(axis=1)
     raw_top18_prob = df.sum(axis=1)
 
     if games_played is not None:
@@ -403,7 +402,7 @@ def compute_playoff_odds(all_players, cutoff=18, eval_pool=50, games_played=None
             for player in df.index
         })
     else:
-        multipliers = pd.Seroes(1.0, index=df.index)
+        multipliers = pd.Series(1.0, index=df.index)
 
     df['Top 18 Prob'] = (raw_top18_prob * multipliers).clip(lower=0, upper=1)
 

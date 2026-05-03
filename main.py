@@ -35,4 +35,4 @@ result = run_full_simulation(df, player, n_sim=1000, inactive_players=inactive_p
 
 #plot_cutoff_projection(result['real_cutoff'], result['sim_cutoff'], today, player, result['real_player'], result['sim_player'])
 #run_rank_projection_pipeline(df, result['all_players'], today, 50, True, 100)
-run_playoff_odds_pipeline(result['all_players'], 18, 50, True, True, True, games_played, 10, 0.5)
+run_playoff_odds_pipeline(result['all_players'], 18, 50, True, True, True, games_played, 10, 0.22)

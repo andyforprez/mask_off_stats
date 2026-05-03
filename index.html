@@ -473,6 +473,7 @@ function formatDate(iso) {
 function normalizeProbability(value) {
   const n = parseFloat(value);
   if (isNaN(n)) return 0;
+  if (n > 1 && n <= 2) return 1; // treat slight overflow as 100%, not 1-2%
   const scaled = n > 1 ? n / 100 : n;
   return Math.max(0, Math.min(1, scaled));
 }

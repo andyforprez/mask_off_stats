@@ -138,8 +138,9 @@ def build_player_profiles(df):
 
 def build_future_schedule(start_date, end_date):
     WEEKDAY_TO_TYPE = {
+        'Tuesday': 'high roller',
         'Wednesday': 'double rating points',
-        'Thursday': 'high roller',
+        'Thursday': 'phoenix',
         'Friday': 'deep classic',
         'Saturday': 'bounty',
         'Sunday': 'triple shot'

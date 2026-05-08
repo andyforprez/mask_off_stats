@@ -13,7 +13,7 @@ rank_df = add_rankings(full_df)
 gain_df = add_daily_gain(df)
 
 today = df['date'].max()
-player = 'Гризли'
+player = 'Антуан Гризманн'
 inactive_players = {}
 games_played = df.groupby('player_id')['date'].nunique().to_dict()
 

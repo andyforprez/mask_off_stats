@@ -1,6 +1,6 @@
 player_id,date,tournament_type,position,points,bounties
 Noize MC,2026-05-02,bounty,1,1150,13
-Гризли,2026-05-02,bounty,2,1115,14
+Чека-чека,2026-05-02,bounty,2,1115,14
 Драйв,2026-05-02,bounty,3,1020,12
 long_2203,2026-05-02,bounty,4,845,6
 кинчоч,2026-05-02,bounty,5,770,5
@@ -76,53 +76,191 @@ rus210385,2026-05-02,bounty,74,25,0
 nsa,2026-05-02,bounty,75,20,0
 alinaadmv,2026-05-02,bounty,76,15,0
 DanilaOdinokov,2026-05-02,bounty,77,5,0
-nk_telller,2026-05-03,triple shot,1,750,0
-Cordell,2026-05-03,triple shot,2,695,0
-ustayonmymind,2026-05-03,triple shot,3,640,0
-Lancelot,2026-05-03,triple shot,4,585,0
-Rik_dds,2026-05-03,triple shot,5,530,0
-danalanaaa,2026-05-03,triple shot,6,475,0
-Пиковая Дама,2026-05-03,triple shot,7,420,0
-EliasPavlov,2026-05-03,triple shot,8,365,0
-Yrs,2026-05-03,triple shot,9,310,0
-Бэндер,2026-05-03,triple shot,10,255,0
-лучший игрок,2026-05-03,triple shot,11,250,0
-ajolana,2026-05-03,triple shot,12,245,0
-szrvi,2026-05-03,triple shot,13,240,0
-Yanchik_250,2026-05-03,triple shot,14,235,0
-Ruslan1,2026-05-03,triple shot,15,230,0
-Пассажир,2026-05-03,triple shot,16,225,0
-FireSnail,2026-05-03,triple shot,17,220,0
-lubashley,2026-05-03,triple shot,18,215,0
-Настя дай стек,2026-05-03,triple shot,19,160,0
-Викусик,2026-05-03,triple shot,20,155,0
-artyomkalina,2026-05-03,triple shot,21,150,0
-Ромчик,2026-05-03,triple shot,22,145,0
-Никитос,2026-05-03,triple shot,23,140,0
-Стич,2026-05-03,triple shot,24,135,0
-3y6a,2026-05-03,triple shot,25,130,0
-sasha12039,2026-05-03,triple shot,26,125,0
-avveev,2026-05-03,triple shot,27,120,0
-Retbin,2026-05-03,triple shot,28,115,0
-John Fisher,2026-05-03,triple shot,29,110,0
-nesmotri_v_shelll1,2026-05-03,triple shot,30,105,0
-Chesters,2026-05-03,triple shot,31,100,0
-Yandi,2026-05-03,triple shot,32,95,0
-Laches1,2026-05-03,triple shot,33,90,0
-gvrdkn,2026-05-03,triple shot,34,85,0
-chilly,2026-05-03,triple shot,35,80,0
-Mark,2026-05-03,triple shot,36,75,0
-Leomane,2026-05-03,triple shot,37,70,0
-mflameee,2026-05-03,triple shot,38,65,0
-Serg,2026-05-03,triple shot,39,60,0
-lifechampagne,2026-05-03,triple shot,40,55,0
-Настя дай ребай блат,2026-05-03,triple shot,41,50,0
-kornaakov,2026-05-03,triple shot,42,45,0
-kuromi,2026-05-03,triple shot,43,40,0
-ksellym,2026-05-03,triple shot,44,35,0
-гофер,2026-05-03,triple shot,45,30,0
-pеtr32,2026-05-03,triple shot,46,25,0
-Гонзалес,2026-05-03,triple shot,47,20,0
-veronesss,2026-05-03,triple shot,48,15,0
-etovadikk,2026-05-03,triple shot,49,10,0
-DmitriiM0,2026-05-03,triple shot,50,5,0
+Kanti,2026-05-06,double rating points,1,1200,0
+лучший игрок,2026-05-06,double rating points,2,1140,0
+emilian_s,2026-05-06,double rating points,3,1080,0
+turkoid,2026-05-06,double rating points,4,1020,0
+кинчоч,2026-05-06,double rating points,5,960,0
+Obscur,2026-05-06,double rating points,6,900,0
+Руслан,2026-05-06,double rating points,7,840,0
+Антуан Гризманн,2026-05-06,double rating points,8,780,0
+дисциплина,2026-05-06,double rating points,9,720,0
+Настя дай стек,2026-05-06,double rating points,10,660,0
+EliasPavlov,2026-05-06,double rating points,11,650,0
+maria_merlot,2026-05-06,double rating points,12,640,0
+Комар,2026-05-06,double rating points,13,630,0
+nesmotri_v_shelll1,2026-05-06,double rating points,14,620,0
+Serg,2026-05-06,double rating points,15,610,0
+Julia_2499,2026-05-06,double rating points,16,600,0
+Бэндер,2026-05-06,double rating points,17,590,0
+E_ishutkin,2026-05-06,double rating points,18,580,0
+Maza,2026-05-06,double rating points,19,520,0
+Noize MC,2026-05-06,double rating points,20,510,0
+FreSko,2026-05-06,double rating points,21,500,0
+Пиковая Дама,2026-05-06,double rating points,22,490,0
+lethalpresence,2026-05-06,double rating points,23,480,0
+Yars,2026-05-06,double rating points,24,470,0
+clayzid,2026-05-06,double rating points,25,460,0
+MAKKSMIR,2026-05-06,double rating points,26,450,0
+swapblet,2026-05-06,double rating points,27,440,0
+long_2203,2026-05-06,double rating points,28,430,0
+Chimedaschool1,2026-05-06,double rating points,29,420,0
+Добросердечный,2026-05-06,double rating points,30,410,0
+Kent,2026-05-06,double rating points,31,400,0
+Bereza,2026-05-06,double rating points,32,390,0
+Кальян,2026-05-06,double rating points,33,380,0
+Катальня,2026-05-06,double rating points,34,370,0
+3y6a,2026-05-06,double rating points,35,360,0
+Фиш,2026-05-06,double rating points,36,350,0
+Staryii,2026-05-06,double rating points,37,340,0
+bogdanov,2026-05-06,double rating points,38,330,0
+Катала,2026-05-06,double rating points,39,320,0
+ksuhony,2026-05-06,double rating points,40,310,0
+KLO,2026-05-06,double rating points,41,300,0
+Rik_dds,2026-05-06,double rating points,42,290,0
+terzzzzzzzzz,2026-05-06,double rating points,43,280,0
+Отец Дмитрий,2026-05-06,double rating points,44,270,0
+mvp,2026-05-06,double rating points,45,260,0
+Викусик,2026-05-06,double rating points,46,250,0
+Cocacola,2026-05-06,double rating points,47,240,0
+Катюха,2026-05-06,double rating points,48,230,0
+NumberCat,2026-05-06,double rating points,49,220,0
+yungplague,2026-05-06,double rating points,50,210,0
+Retik,2026-05-06,double rating points,51,200,0
+MYDAK,2026-05-06,double rating points,52,190,0
+gvrdkn,2026-05-06,double rating points,53,180,0
+Настя дай ребай блат,2026-05-06,double rating points,54,170,0
+Yandi,2026-05-06,double rating points,55,160,0
+Драйв,2026-05-06,double rating points,56,150,0
+aisel,2026-05-06,double rating points,57,140,0
+dpolyaa,2026-05-06,double rating points,58,130,0
+Olga Sheil,2026-05-06,double rating points,59,120,0
+Kapukatya,2026-05-06,double rating points,60,110,0
+Legi,2026-05-06,double rating points,61,100,0
+Tanyashl,2026-05-06,double rating points,62,90,0
+Svetab,2026-05-06,double rating points,63,80,0
+Al,2026-05-06,double rating points,64,70,0
+Ромчик,2026-05-06,double rating points,65,60,0
+okiyumi,2026-05-06,double rating points,66,50,0
+stil9ger,2026-05-06,double rating points,67,40,0
+6igfi$Hf4n,2026-05-06,double rating points,68,30,0
+Nika,2026-05-06,double rating points,69,20,0
+LPZ18,2026-05-06,double rating points,70,10,0
+Serg,2026-05-07,phoenix,1,1090,0
+Бэндер,2026-05-07,phoenix,2,1035,0
+Плейбой в карты,2026-05-07,phoenix,3,1030,0
+by_twentyseven,2026-05-07,phoenix,4,1025,0
+EliasPavlov,2026-05-07,phoenix,5,1020,0
+Lock,2026-05-07,phoenix,6,1015,0
+Похороное бюро «улыбка»,2026-05-07,phoenix,7,960,0
+KidPoker,2026-05-07,phoenix,8,905,0
+szrvi,2026-05-07,phoenix,9,850,0
+mary_muse7,2026-05-07,phoenix,10,795,0
+dzhemus,2026-05-07,phoenix,11,740,0
+Nolekri,2026-05-07,phoenix,12,685,0
+nesmotri_v_shelll1,2026-05-07,phoenix,13,630,0
+sl1dbygad,2026-05-07,phoenix,14,575,0
+artyomkalina,2026-05-07,phoenix,15,570,0
+Noize MC,2026-05-07,phoenix,16,565,0
+z9,2026-05-07,phoenix,17,560,0
+wasapmaaan,2026-05-07,phoenix,18,555,0
+Deroz,2026-05-07,phoenix,19,550,0
+Chicago,2026-05-07,phoenix,20,545,0
+Лудоданя,2026-05-07,phoenix,21,540,0
+Татьяна Юрьевна Р.,2026-05-07,phoenix,22,535,0
+Leomane,2026-05-07,phoenix,23,480,0
+sasha12039,2026-05-07,phoenix,24,475,0
+vovaa_25,2026-05-07,phoenix,25,470,0
+FISHer,2026-05-07,phoenix,26,465,0
+Ромчик,2026-05-07,phoenix,27,460,0
+duy27,2026-05-07,phoenix,28,455,0
+swapblet,2026-05-07,phoenix,29,450,0
+GodЗИЛLa,2026-05-07,phoenix,30,445,0
+Добросердечный,2026-05-07,phoenix,31,440,0
+dunkaeva,2026-05-07,phoenix,32,435,0
+дисциплина,2026-05-07,phoenix,33,430,0
+Пассажир,2026-05-07,phoenix,34,425,0
+Кубус,2026-05-07,phoenix,35,420,0
+ustayonmymind,2026-05-07,phoenix,36,415,0
+Holmes,2026-05-07,phoenix,37,410,0
+willy </3,2026-05-07,phoenix,38,405,0
+kirienish,2026-05-07,phoenix,39,400,0
+ajolana,2026-05-07,phoenix,40,395,0
+Manhattan,2026-05-07,phoenix,41,390,0
+Kichatov,2026-05-07,phoenix,42,385,0
+Sabina,2026-05-07,phoenix,43,380,0
+E_ishutkin,2026-05-07,phoenix,44,375,0
+Лука,2026-05-07,phoenix,45,370,0
+Rik_dds,2026-05-07,phoenix,46,365,0
+Milana_Xam,2026-05-07,phoenix,47,360,0
+Ташкент,2026-05-07,phoenix,48,355,0
+Chesters,2026-05-07,phoenix,49,350,0
+Лина,2026-05-07,phoenix,50,345,0
+kuromi,2026-05-07,phoenix,51,340,0
+Руслан,2026-05-07,phoenix,52,335,0
+Викусик,2026-05-07,phoenix,53,330,0
+Бутербродский,2026-05-07,phoenix,54,325,0
+Maxim,2026-05-07,phoenix,55,320,0
+ddv,2026-05-07,phoenix,56,315,0
+Студент,2026-05-07,phoenix,57,310,0
+Бандэрос,2026-05-07,phoenix,58,305,0
+Obscur,2026-05-07,phoenix,59,300,0
+maria_merlot,2026-05-07,phoenix,60,295,0
+МВика,2026-05-07,phoenix,61,290,0
+витя доезд,2026-05-07,phoenix,62,285,0
+bron,2026-05-07,phoenix,63,280,0
+Ilia M,2026-05-07,phoenix,64,275,0
+whitecurly_rr,2026-05-07,phoenix,65,270,0
+NEVERLUCKY,2026-05-07,phoenix,66,265,0
+Bereza,2026-05-07,phoenix,67,260,0
+Yars,2026-05-07,phoenix,68,255,0
+Yandi,2026-05-07,phoenix,69,250,0
+Даша 12 см,2026-05-07,phoenix,70,245,0
+Kerbi,2026-05-07,phoenix,71,240,0
+Artemon,2026-05-07,phoenix,72,235,0
+maxim_galeev,2026-05-07,phoenix,73,230,0
+Gluckspilz8,2026-05-07,phoenix,74,225,0
+gvrdkn,2026-05-07,phoenix,75,220,0
+egorzubkovv,2026-05-07,phoenix,76,215,0
+moodellas,2026-05-07,phoenix,77,210,0
+bogdansskii,2026-05-07,phoenix,78,205,0
+ksuhony,2026-05-07,phoenix,79,200,0
+Стич,2026-05-07,phoenix,80,195,0
+xairullah,2026-05-07,phoenix,81,190,0
+steyk,2026-05-07,phoenix,82,185,0
+ywmoxd,2026-05-07,phoenix,83,180,0
+Наталья,2026-05-07,phoenix,84,175,0
+over9000mmr,2026-05-07,phoenix,85,170,0
+E13,2026-05-07,phoenix,86,165,0
+Aronio,2026-05-07,phoenix,87,160,0
+Антуан Гризманн,2026-05-07,phoenix,88,155,0
+Yanchik_250,2026-05-07,phoenix,89,150,0
+Alkyds,2026-05-07,phoenix,90,145,0
+Qrexi,2026-05-07,phoenix,91,140,0
+Vitos2049,2026-05-07,phoenix,92,135,0
+xiolloix,2026-05-07,phoenix,93,130,0
+Akatones,2026-05-07,phoenix,94,125,0
+ivolodya,2026-05-07,phoenix,95,120,0
+ForceUser,2026-05-07,phoenix,96,115,0
+Pikachu,2026-05-07,phoenix,97,110,0
+Nikoshka,2026-05-07,phoenix,98,105,0
+Gambling Addiction,2026-05-07,phoenix,99,100,0
+В азарт не входим,2026-05-07,phoenix,100,95,0
+Kanti,2026-05-07,phoenix,101,90,0
+Yrs,2026-05-07,phoenix,102,85,0
+Brooklyn,2026-05-07,phoenix,103,80,0
+Laches1,2026-05-07,phoenix,104,75,0
+Suruchik,2026-05-07,phoenix,105,70,0
+long_2203,2026-05-07,phoenix,106,65,0
+Luter,2026-05-07,phoenix,107,60,0
+STG,2026-05-07,phoenix,108,55,0
+turkoid,2026-05-07,phoenix,109,50,0
+Настя дай ребай блат,2026-05-07,phoenix,110,45,0
+Пиковая Дама,2026-05-07,phoenix,111,40,0
+Volodnika,2026-05-07,phoenix,112,35,0
+Чека-чека,2026-05-07,phoenix,113,30,0
+t1m,2026-05-07,phoenix,114,25,0
+vad1m09473,2026-05-07,phoenix,115,20,0
+TryFraiz,2026-05-07,phoenix,116,15,0
+Staryii,2026-05-07,phoenix,117,10,0
+3y6a,2026-05-07,phoenix,118,5,0

@@ -71,12 +71,12 @@ def save_playoff_odds_csv(df, path='data/playoff_odds.csv'):
     df.to_csv(path, encoding='utf-8')
 
 def save_playoff_odds_excel(df, path='data/playoff_odds.xlsx'):
-    top_col = 'Top 18 Prob'
+    top_col = 'Top 24 Prob'
     cols = [top_col] + [c for c in df.columns if c != top_col]
     df = df[cols]
     df = df.copy()
     df['Expected Rank'] = 0
-    for i in range(1, 18):
+    for i in range(1, 24):
         col = f'Rank {i}'
         if col in df.columns:
             df['Expected Rank'] += df[col] * i
@@ -100,37 +100,37 @@ def save_playoff_odds_excel(df, path='data/playoff_odds.xlsx'):
     max_row = ws.max_row
     max_col = ws.max_column
 
-    top18_range = f'{ws.cell(row=2, column=2).coordinate}:{ws.cell(row=max_row, column=2).coordinate}'
+    top24_range = f'{ws.cell(row=2, column=2).coordinate}:{ws.cell(row=max_row, column=2).coordinate}'
     rank_prob_range = f'{ws.cell(row=2, column=4).coordinate}:{ws.cell(row=max_row, column=max_col).coordinate}'
     gradient_rule = ColorScaleRule(
         start_type='num', start_value=0, start_color='FF0000',
         mid_type='percentile', mid_value=50, mid_color='FFFF00',
         end_type='num', end_value=1, end_color='00FF00'
     )
-    ws.conditional_formatting.add(top18_range, gradient_rule)
+    ws.conditional_formatting.add(top24_range, gradient_rule)
     ws.conditional_formatting.add(rank_prob_range, gradient_rule)
 
     rank_col = 3
     rank_range = f'{ws.cell(row=3, column=rank_col).coordinate}:{ws.cell(row=max_row, column=rank_col).coordinate}'
     green_fill = PatternFill(start_color='00FF00', end_color='00FF00', fill_type='solid')
-    top18_rule = CellIsRule(
+    top24_rule = CellIsRule(
         operator='lessThanOrEqual',
-        formula=['18'],
+        formula=['24'],
         fill=green_fill
     )
-    ws.conditional_formatting.add(rank_range, top18_rule)
+    ws.conditional_formatting.add(rank_range, top24_rule)
 
     red_line = Side(style='thick', color='FF0000')
     border = Border(bottom=red_line)
     for col in range(1, max_col + 1):
-        cell = ws.cell(row=18+2, column=col)
+        cell = ws.cell(row=24+2, column=col)
         cell.border = border
 
     ws.column_dimensions['A'].width = 20
     ws.freeze_panes = 'B2'
     wb.save(path)
 
-def run_playoff_odds_pipeline(all_players, output_top=18, eval_pool=50, save_csv=True, save_excel=True, open_excel=True, games_played=None, min_games_for_full=10, min_multiplier=0.22):
+def run_playoff_odds_pipeline(all_players, output_top=24, eval_pool=50, save_csv=True, save_excel=True, open_excel=True, games_played=None, min_games_for_full=10, min_multiplier=0.22):
     odds_df = compute_playoff_odds(all_players, output_top, eval_pool, games_played, min_games_for_full, min_multiplier)
     if save_csv:
         save_playoff_odds_csv(odds_df)

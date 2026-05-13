@@ -210,11 +210,11 @@ def plot_cutoff(df, player_name=None):
         df = df.reset_index()
 
     df = df.sort_values(['date', 'cumulative_points'], ascending=[True, False])
-    cutoff = df.groupby('date', as_index=False).nth(18)
+    cutoff = df.groupby('date', as_index=False).nth(24)
     cutoff = cutoff.reset_index(drop=True)
 
     plt.figure()
-    plt.plot(cutoff['date'], cutoff['cumulative_points'], label='Top 18 Cutoff')
+    plt.plot(cutoff['date'], cutoff['cumulative_points'], label='Top 24 Cutoff')
 
     if player_name is not None:
         player_df = df[df['player_id'] == player_name]

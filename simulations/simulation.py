@@ -102,7 +102,7 @@ def build_player_profiles(df):
     experience_weight = (player_days / max_games) ** 0.7
 
     #clutch metric
-    deep_runs = df[df['position'] <= 18]
+    deep_runs = df[df['position'] <= 24]
     player_deep_avg = deep_runs.groupby('player_id')['points'].mean()
     global_deep_avg = deep_runs['points'].mean() if len(deep_runs) > 0 else 1
     clutch_factor = (player_deep_avg / global_deep_avg).fillna(1)
@@ -212,7 +212,7 @@ def simulate_one_run(start_standings, profiles, schedule):
 
         cutoff_over_time.append({
             'date': day['date'],
-            'cutoff': ranked[18][1]
+            'cutoff': ranked[24][1]
         })
     return cutoff_over_time
 
@@ -233,7 +233,7 @@ def run_simulations(df, profiles, schedule, n_sim=1000, inactive_players=None):
 
             cutoff_series.append({
                 'date': day['date'],
-                'cutoff': ranked[18][1]
+                'cutoff': ranked[24][1]
             })
 
             rank_lookup = {p : r for r, (p, _) in enumerate(ranked, 1)}
@@ -265,7 +265,7 @@ def compute_real_cutoff(df):
         day_df = df[df['date'] <= date]
         latest = day_df.sort_values('date').groupby('player_id').tail(1)
         ranked = latest.sort_values('cumulative_points', ascending=False).reset_index(drop=True)
-        cutoff = ranked.iloc[18]['cumulative_points']
+        cutoff = ranked.iloc[24]['cumulative_points']
         cutoffs.append({
             'date': date,
             'cutoff': cutoff
@@ -384,7 +384,7 @@ def compute_season_progress(games_played_dict, min_games_for_full=10):
     return min(1.0, median_games / min_games_for_full)
 
 
-def compute_playoff_odds(all_players, cutoff=18, eval_pool=50, games_played=None, min_games_for_full=10, min_multiplier=0.22):
+def compute_playoff_odds(all_players, cutoff=24, eval_pool=50, games_played=None, min_games_for_full=10, min_multiplier=0.22):
     first_sim = all_players[0]
     ranked_first = sorted(first_sim.items(), key=lambda x: extract_final_score(x[1]), reverse=True)[:eval_pool]
     players = [p for p, _ in ranked_first]
@@ -402,7 +402,7 @@ def compute_playoff_odds(all_players, cutoff=18, eval_pool=50, games_played=None
 
     df = df / len(all_players)
     df = df.iloc[:, :cutoff]
-    raw_top18_prob = df.sum(axis=1)
+    raw_top24_prob = df.sum(axis=1)
 
     if games_played is not None:
         multipliers = pd.Series({
@@ -412,7 +412,7 @@ def compute_playoff_odds(all_players, cutoff=18, eval_pool=50, games_played=None
     else:
         multipliers = pd.Series(1.0, index=df.index)
 
-    sim_adjusted = (raw_top18_prob * multipliers).clip(lower=0, upper=1)
+    sim_adjusted = (raw_top24_prob * multipliers).clip(lower=0, upper=1)
 
     season_progress = compute_season_progress(games_played, min_games_for_full) if games_played else 0.0
     season_newness = (1.0 - season_progress) ** 2
@@ -439,10 +439,10 @@ def compute_playoff_odds(all_players, cutoff=18, eval_pool=50, games_played=None
             df.loc[player, rank_cols] *= (target / raw)
         else:
             df.loc[player, rank_cols] = 0.0
-            df.loc[player, 'Rank 18'] = target
-        df['Top 18 Prob'] = blended.where(blended >= DISPLAY_THRESHOLD, 0.0)
+            df.loc[player, 'Rank 24'] = target
+        df['Top 24 Prob'] = blended.where(blended >= DISPLAY_THRESHOLD, 0.0)
 
-    df = df.sort_values(by='Top 18 Prob', ascending=False)
+    df = df.sort_values(by='Top 24 Prob', ascending=False)
     return df
 
 def is_season_over(today, end_date):

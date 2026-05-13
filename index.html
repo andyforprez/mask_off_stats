@@ -382,7 +382,7 @@
   </div>
   <div class="stat-cell">
     <div class="stat-label">Playoff Spots</div>
-    <div class="stat-value">18</div>
+    <div class="stat-value">24</div>
   </div>
   <div class="stat-cell">
     <div class="stat-label">Last Game</div>
@@ -402,7 +402,7 @@
 <div class="col-header">
   <div class="col-label">#</div>
   <div class="col-label">Player</div>
-  <div class="col-label r">Top 18</div>
+  <div class="col-label r">Top 24</div>
 </div>
 
 <div class="section-label">Rankings by playoff probability</div>
@@ -509,14 +509,14 @@ function render(players) {
   let cutoffDone = false;
 
   players.forEach((p, i) => {
-    const { zone: zoneCode, color } = zoneAndColor(p.top18Prob);
-    const barW    = Math.round(p.top18Prob * 100);
-    const probStr = (p.top18Prob * 100) >= 99.95 ? '100%'
-                  : (p.top18Prob * 100).toFixed(1) + '%';
-    const delay   = Math.min(i * 18, 280);
+    const { zone: zoneCode, color } = zoneAndColor(p.top24Prob);
+    const barW    = Math.round(p.top24Prob * 100);
+    const probStr = (p.top24Prob * 100) >= 99.95 ? '100%'
+                  : (p.top24Prob * 100).toFixed(1) + '%';
+    const delay   = Math.min(i * 24, 280);
     const bc      = badgeClass(p.displayRank, zoneCode);
 
-    if (!cutoffDone && p.displayRank > 18) {
+    if (!cutoffDone && p.displayRank > 24) {
       html += `<div class="cutoff-divider"><span>── Playoff cutoff ──</span></div>`;
       cutoffDone = true;
     }
@@ -561,18 +561,18 @@ async function loadData() {
     const players = csvRows.map(row => {
       const keys   = Object.keys(row);
       const player = row[keys[0]];
-      const top18  = normalizeProbability(row['Top 18 Prob'] || '0');
+      const top24  = normalizeProbability(row['Top 24 Prob'] || '0');
       const exp    = expRanks[player];
       return {
         player,
-        top18Prob: top18,
+        top24Prob: top24,
         avgRank:   exp ? exp.avgRank : null,
       };
     }).filter(p => p.player);
 
-    // Sort: top18Prob descending; ties broken by avgRank ascending
+    // Sort: top24Prob descending; ties broken by avgRank ascending
     players.sort((a, b) => {
-      if (b.top18Prob !== a.top18Prob) return b.top18Prob - a.top18Prob;
+      if (b.top24Prob !== a.top24Prob) return b.top24Prob - a.top24Prob;
       if (a.avgRank !== null && b.avgRank !== null) return a.avgRank - b.avgRank;
       if (a.avgRank !== null) return -1;
       if (b.avgRank !== null) return  1;
